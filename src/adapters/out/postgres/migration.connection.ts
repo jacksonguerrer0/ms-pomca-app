@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { typeOrmConfig } from "./typeorm.config";
 
-export const AppDataSource = new DataSource({
+export const dataSource = new DataSource({
   ...typeOrmConfig(),
   migrationsTransactionMode: 'each'
 })

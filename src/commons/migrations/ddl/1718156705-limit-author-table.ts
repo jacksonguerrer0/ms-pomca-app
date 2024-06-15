@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class LimitAuthorTable1718156448 implements MigrationInterface {
+  name = '1718156448';
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       CREATE OR REPLACE FUNCTION check_limit_author() RETURNS TRIGGER AS $$

@@ -11,5 +11,6 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   reporters: ['default', 'jest-junit'],
-  coverageReporters: ['json', 'lcov', 'text', 'clover']
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  setupFiles: ['dotenv/config']
 }
