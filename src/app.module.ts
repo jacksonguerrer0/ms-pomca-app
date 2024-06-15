@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CommonsModule } from './commons/common.module';
+import { ConfigModule } from './config.module';
+import { PomcaModule } from './pomca.module';
 
 @Module({
-  imports: [ConfigModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [CommonsModule, ConfigModule, PomcaModule],
 })
 export class AppModule {}
