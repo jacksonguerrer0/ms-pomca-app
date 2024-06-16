@@ -5,6 +5,7 @@ import { IAuthorRepository } from 'domain/src/model/author/author.repository';
 import { Repository } from 'typeorm';
 import { AuthorEntitySchema } from '../entity-schemas/author.entity-schema';
 
+@Injectable()
 export class AuthorRepository implements IAuthorRepository {
   constructor(
     @InjectRepository(AuthorEntitySchema)
