@@ -19,7 +19,7 @@ import { HandlerGetServerHealth } from './handler/health/get-server-health.handl
       useClass: TypeOrmHealthRepository,
     },
     {
-      provide: 'GetHealthUseCase',
+      provide: 'GetHealthUsecase',
       inject: ['TypeOrmHealthRepository'],
       useFactory: (repository) => new GetHealthUsecase(repository),
     },

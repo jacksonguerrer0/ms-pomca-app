@@ -1,5 +1,5 @@
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { IHealthRepository } from 'domain/src/model/health/interface/health.repository';
+import { IHealthRepository } from 'domain/src/model/health/health.repository';
 import { EntityManager } from 'typeorm';
 import { dataSource } from '../migration.connection';
 

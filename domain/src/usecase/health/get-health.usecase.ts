@@ -1,4 +1,4 @@
-import { IHealthRepository } from "domain/src/model/health/interface/health.repository";
+import { IHealthRepository } from "domain/src/model/health/health.repository";
 
 export class GetHealthUsecase {
   constructor(private healthRepository: IHealthRepository) {}
