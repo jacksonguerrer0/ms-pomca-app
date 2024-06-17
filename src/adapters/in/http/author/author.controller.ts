@@ -4,7 +4,7 @@ import { AuthorEntity } from 'domain/src/model/author/author.entity';
 import { HandlerGetAuthor } from 'src/handler/author/get-author-handler';
 
 @ApiTags('Author')
-@Controller('author')
+@Controller('v1/author')
 export class AuthorController {
   constructor(private handlerGetAuthor: HandlerGetAuthor) {}
 
