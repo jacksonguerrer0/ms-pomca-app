@@ -24,7 +24,7 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migrations:generate": "npm run typeorm -- migration:generate -d src/adapters/out/postgres/migration.connection.ts",
     "migrations:run": "npm run typeorm -- migration:run -d src/adapters/out/postgres/migration.connection.ts",
-    "migrations:revert": "npx typeorm-ts-node-commonjs migration:revert -d ./src/adapters/out/postgres/migration.connection.ts"
+    "migrations:revert": "npm run typeorm -- migration:revert -d ./src/adapters/out/postgres/migration.connection.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
