@@ -1,9 +1,16 @@
+import {
+  IFilterOptions,
+  IPaginatedResult,
+  IPaginationOptions,
+} from 'domain/src/common/commands/pagination.command';
 import { MerchantPostEntity } from './merchant-post.entity';
 
-export interface IFarmerPostRepository {
-  create(data: any): Promise<MerchantPostEntity>;
-  update(id: number, data: any): Promise<MerchantPostEntity>;
-  delete(id: number): Promise<MerchantPostEntity>;
+export interface IMerchantPostRepository {
+  save(data: MerchantPostEntity): Promise<MerchantPostEntity>;
+  delete(id: number): Promise<boolean>;
   getById(id: number): Promise<MerchantPostEntity>;
-  getAll(filter: any): Promise<MerchantPostEntity[]>;
+  getAll(
+    option: IFilterOptions,
+    pagination: IPaginationOptions,
+  ): Promise<IPaginatedResult<MerchantPostEntity>>;
 }

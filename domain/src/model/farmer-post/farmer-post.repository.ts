@@ -1,9 +1,16 @@
-import { FarmerPostEntity } from "./farmer-post.entity";
+import {
+  IFilterOptions,
+  IPaginatedResult,
+  IPaginationOptions,
+} from 'domain/src/common/commands/pagination.command';
+import { FarmerPostEntity } from './farmer-post.entity';
 
 export interface IFarmerPostRepository {
-  create(data: any): Promise<FarmerPostEntity>;
-  update(id: number, data: any): Promise<FarmerPostEntity>;
-  delete(id: number): Promise<FarmerPostEntity>;
+  save(data: FarmerPostEntity): Promise<FarmerPostEntity>;
+  delete(id: number): Promise<boolean>;
   getById(id: number): Promise<FarmerPostEntity>;
-  getAll(filter: any): Promise<FarmerPostEntity[]>;
+  getAll(
+    option: IFilterOptions,
+    pagination: IPaginationOptions,
+  ): Promise<IPaginatedResult<FarmerPostEntity>>;
 }

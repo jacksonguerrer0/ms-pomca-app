@@ -1,7 +1,7 @@
 import { MerchantEntity } from 'domain/src/model/merchant/merchant.entity';
 import { EntitySchema } from 'typeorm';
 
-export const MerchantsEntitySchema = new EntitySchema<MerchantEntity>({
+export const MerchantEntitySchema = new EntitySchema<MerchantEntity>({
   name: 'Merchants',
   columns: {
     id: {

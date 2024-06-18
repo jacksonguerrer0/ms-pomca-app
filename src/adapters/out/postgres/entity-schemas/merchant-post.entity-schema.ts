@@ -1,15 +1,15 @@
-import { FarmerPostEntity } from 'domain/src/model/farmer-post/farmer-post.entity';
+import { MerchantPostEntity } from 'domain/src/model/merchant-post/merchant-post.entity';
 import { EntitySchema } from 'typeorm';
 
-export const FarmerPostsEntitySchema = new EntitySchema<FarmerPostEntity>({
-  name: 'FarmerPosts',
+export const MerchantPostEntitySchema = new EntitySchema<MerchantPostEntity>({
+  name: 'MerchantPosts',
   columns: {
     id: {
       type: Number,
       primary: true,
       generated: true,
     },
-    farmer_id: {
+    merchant_id: {
       type: Number,
     },
     title: {

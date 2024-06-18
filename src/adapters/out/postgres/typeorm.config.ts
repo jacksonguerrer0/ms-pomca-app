@@ -2,8 +2,6 @@ import 'dotenv/config';
 import { DataSourceOptions } from 'typeorm';
 import { isLocalEnv } from '../../../commons/utils/applications.utils';
 
-console.log('process.env.DB_NAME', process.env.DB_NAME, __dirname);
-
 export const typeOrmConfig = () => {
   return {
     type: process.env.DB_TYPE as any,

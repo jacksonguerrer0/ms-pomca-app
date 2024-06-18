@@ -1,7 +1,7 @@
 import { FarmerEntity } from 'domain/src/model/farmer/farmer.entity';
 import { EntitySchema } from 'typeorm';
 
-export const FarmersEntitySchema = new EntitySchema<FarmerEntity>({
+export const FarmerEntitySchema = new EntitySchema<FarmerEntity>({
   name: 'Farmers',
   columns: {
     id: {
