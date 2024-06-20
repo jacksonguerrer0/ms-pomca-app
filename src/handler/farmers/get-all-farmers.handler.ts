@@ -14,7 +14,6 @@ export class HandlerGetAllFarmers {
 
   async execute(query: FilterPaginationDTO): Promise<HTTPResponse> {
     try {
-      console.log('HandlerGetAllFarmers -> execute -> query', query);
       const { filterOptions, paginationOptions } =
         mapFilterPaginateOptions(query);
       const { data, pagination } = await this.getAllFarmersUseCase.apply(

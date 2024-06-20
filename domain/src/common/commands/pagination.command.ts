@@ -1,6 +1,8 @@
+import { PaginationOrderEnum } from "../enum/pagination-order.enum";
+
 export interface IFilterOptions {
   orderBy?: string;
-  order?: 'ASC' | 'DESC';
+  order?: PaginationOrderEnum;
   filters?: string[];
   values?: any[];
 }

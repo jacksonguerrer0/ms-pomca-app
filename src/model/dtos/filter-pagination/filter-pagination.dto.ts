@@ -1,9 +1,10 @@
 import { Transform } from 'class-transformer';
-import { IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import {
   IFilterOptions,
   IPaginationOptions,
 } from 'domain/src/common/commands/pagination.command';
+import { PaginationOrderEnum } from 'domain/src/common/enum/pagination-order.enum';
 
 export class FilterPaginationDTO implements IFilterOptions, IPaginationOptions {
   @IsOptional()
@@ -19,8 +20,8 @@ export class FilterPaginationDTO implements IFilterOptions, IPaginationOptions {
   orderBy?: string;
 
   @IsOptional()
-  @IsString()
-  order?: 'ASC' | 'DESC';
+  @IsEnum(PaginationOrderEnum)
+  order?: PaginationOrderEnum;
 
   @IsOptional()
   @IsNumber()

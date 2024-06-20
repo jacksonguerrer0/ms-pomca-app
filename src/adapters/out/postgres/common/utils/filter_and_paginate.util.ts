@@ -38,27 +38,24 @@ export async function filterAndPaginate<T>(
   const page = options.page;
   const pageSize = options.pageSize;
   try {
-      const [data, totalItems] = await repository.findAndCount({
-        ...findOptions,
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-      });
+    const [data, totalItems] = await repository.findAndCount({
+      ...findOptions,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
 
-  const totalPages = Math.ceil(totalItems / pageSize);
+    const totalPages = Math.ceil(totalItems / pageSize);
 
-  return {
-    data,
-    pagination: {
-      page,
-      pageSize,
-      totalItems,
-      totalPages,
-    },
-  };
+    return {
+      data,
+      pagination: {
+        page,
+        pageSize,
+        totalItems,
+        totalPages,
+      },
+    };
   } catch (error) {
-      console.log('fata', error);
-
+    console.error('Error filterAndPaginate:', error);
   }
-
-
 }
