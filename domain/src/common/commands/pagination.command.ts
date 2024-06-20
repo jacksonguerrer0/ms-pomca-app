@@ -10,6 +10,11 @@ export interface IPaginationOptions {
   pageSize?: number;
 }
 
+export interface IFilterPaginateOptions {
+  filterOptions: IFilterOptions;
+  paginationOptions: IPaginationOptions;
+}
+
 export interface IPaginationData {
   page: number;
   pageSize: number;

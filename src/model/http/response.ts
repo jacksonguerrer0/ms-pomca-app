@@ -4,5 +4,6 @@ export class HTTPResponse<T = any> {
     public readonly code: string,
     public readonly message: string,
     public readonly data?: T,
+    public readonly metadata?: any,
   ) {}
 }

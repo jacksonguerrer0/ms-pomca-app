@@ -15,7 +15,7 @@ import {
 import { FarmerEntitySchema } from '../entity-schemas/farmer.entity-schema';
 
 @Injectable()
-export class FarmerRepository implements IFarmerRepository {
+export class FarmersRepository implements IFarmerRepository {
   constructor(
     @InjectRepository(FarmerEntitySchema)
     private farmerRepository: Repository<FarmerEntity>,
@@ -32,7 +32,6 @@ export class FarmerRepository implements IFarmerRepository {
     pagination: IPaginationOptions,
   ): Promise<IPaginatedResult<FarmerEntity>> {
     const findOptions = { ...(await filterOptions(options, FarmerEntity)) };
-
     return await filterAndPaginate<FarmerEntity>(
       this.farmerRepository,
       pagination,

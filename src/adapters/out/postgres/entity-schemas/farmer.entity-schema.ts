@@ -1,3 +1,4 @@
+import { DocumentTypeEnum } from 'domain/src/model/farmer/enums/document.enum';
 import { FarmerEntity } from 'domain/src/model/farmer/farmer.entity';
 import { EntitySchema } from 'typeorm';
 
@@ -38,9 +39,9 @@ export const FarmerEntitySchema = new EntitySchema<FarmerEntity>({
       length: 50,
     },
     document_type: {
-      type: String,
+      type: 'enum',
+      enum: DocumentTypeEnum,
       nullable: false,
-      length: 50,
     },
     created_at: {
       type: 'timestamp',
