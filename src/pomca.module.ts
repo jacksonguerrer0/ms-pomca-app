@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthorModule } from './modules/author.module';
 import { FarmerModule } from './modules/farmer.module';
-import { DriverRepositoryModule } from './adapters/out/postgres/driver-repository-module';
+import { MerchantModule } from './modules/merchant.module';
 
 @Module({
-  imports: [DriverRepositoryModule, FarmerModule, AuthorModule],
+  imports: [FarmerModule, AuthorModule, MerchantModule],
 })
 export class PomcaModule {}
