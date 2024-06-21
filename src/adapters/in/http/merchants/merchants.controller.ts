@@ -4,7 +4,7 @@ import { HandlerCreateMerchant } from 'src/handler/merchants/create-merchant.han
 import { HandlerGetAllMerchants } from 'src/handler/merchants/get-all-farmers.handler';
 import { HandlerGetMerchantById } from 'src/handler/merchants/get-farmer-by-id.handler';
 import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pagination.dto';
-import { HTTPResponse } from 'src/model/http/response';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
 import { CreateMerchantDTO } from './dto/create-merchant.dto';
 
 @ApiTags('Merchants')
@@ -17,17 +17,19 @@ export class MerchantsController {
   ) {}
 
   @Get()
-  async findAll(@Query() filter: FilterPaginationDTO): Promise<HTTPResponse> {
+  async findAll(
+    @Query() filter: FilterPaginationDTO,
+  ): Promise<HTTPPreResponse> {
     return await this.handlerGetAllMerchants.execute(filter);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<HTTPResponse> {
+  async findOne(@Param('id') id: number): Promise<HTTPPreResponse> {
     return await this.handlerGetMerchantById.execute(id);
   }
 
   @Post()
-  async create(@Body() request: CreateMerchantDTO): Promise<HTTPResponse> {
+  async create(@Body() request: CreateMerchantDTO): Promise<HTTPPreResponse> {
     return await this.handlerCreateMerchant.execute(request);
   }
 }

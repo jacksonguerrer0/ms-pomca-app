@@ -25,7 +25,13 @@ export class FarmersRepository implements IFarmerRepository {
     return await this.farmerRepository.save(data);
   }
   async getById(id: number): Promise<FarmerEntity> {
-    return await this.farmerRepository.findOneBy({ id });
+    const farmer = await this.farmerRepository.findOneBy({ id });
+
+    if (!farmer) {
+      throw new Error(`Farmer with id: ${id} not found`);
+    }
+
+    return farmer;
   }
   async getAll(
     options: IFilterOptions,

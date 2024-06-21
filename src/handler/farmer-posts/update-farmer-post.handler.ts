@@ -1,11 +1,11 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { FarmerPostEntity } from 'domain/src/model/farmer-post/farmer-post.entity';
 import { GetFarmerPostUseCase } from 'domain/src/usecase/farmer-post/get-farmer-post.usecase';
 import { UpdateFarmerPostUseCase } from 'domain/src/usecase/farmer-post/update-farmer-post.usecase';
 import { UpdateFarmerPostDTO } from 'src/adapters/in/http/farmer-posts/dto/update-farmer-post.dto';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
 export class HandlerUpdateFarmerPost {
@@ -19,7 +19,7 @@ export class HandlerUpdateFarmerPost {
   async execute(
     id: number,
     farmerPost: UpdateFarmerPostDTO,
-  ): Promise<HTTPResponse> {
+  ): Promise<HTTPPreResponse> {
     try {
       const currentPost = await this.getFarmerPostByIdUseCase.apply(id);
       const farmerPostEntity = plainToClass(FarmerPostEntity, {
@@ -28,16 +28,14 @@ export class HandlerUpdateFarmerPost {
       });
       const updatedPost =
         await this.updateFarmerPostUseCase.apply(farmerPostEntity);
-      return new HTTPResponse(
-        HttpStatus.PARTIAL_CONTENT,
-        'UPDATED',
+      return new HTTPPreResponse(
+        HttpStatusMapper.OK.code,
         'Post updated successfully',
         updatedPost,
       );
     } catch (error) {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        'BAD_REQUEST',
+      return new HTTPPreResponse(
+        HttpStatusMapper.BAD_REQUEST.code,
         error.message || 'Post could not be updated',
       );
     }

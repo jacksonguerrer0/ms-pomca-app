@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { GetFarmerPostUseCase } from 'domain/src/usecase/farmer-post/get-farmer-post.usecase';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
 export class HandlerGetFarmerPostById {
@@ -10,19 +10,17 @@ export class HandlerGetFarmerPostById {
     private readonly getFarmerPostUseCase: GetFarmerPostUseCase,
   ) {}
 
-  async execute(id: number): Promise<HTTPResponse> {
+  async execute(id: number): Promise<HTTPPreResponse> {
     try {
       const farmerPost = await this.getFarmerPostUseCase.apply(id);
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.success.status,
-        'OK',
+      return new HTTPPreResponse(
+        HttpStatusMapper.OK.code,
         'Post retrieved successfully',
         farmerPost,
       );
     } catch (error) {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        'BAD_REQUEST',
+      return new HTTPPreResponse(
+        HttpStatusMapper.BAD_REQUEST.code,
         error.message,
       );
     }

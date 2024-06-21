@@ -15,7 +15,7 @@ import { HandlerGetAllFarmerPosts } from 'src/handler/farmer-posts/get-all-farme
 import { HandlerGetFarmerPostById } from 'src/handler/farmer-posts/get-farmer-post-by-id.handler';
 import { HandlerUpdateFarmerPost } from 'src/handler/farmer-posts/update-farmer-post.handler';
 import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pagination.dto';
-import { HTTPResponse } from 'src/model/http/response';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
 import { CreateFarmerPostDTO } from './dto/create-farmer-post.dto';
 import { UpdateFarmerPostDTO } from './dto/update-farmer-post.dto';
 
@@ -31,30 +31,32 @@ export class FarmerPostsController {
   ) {}
 
   @Get(':id')
-  async getById(@Param('id') id: number): Promise<HTTPResponse> {
-    return this.handlerGetFarmerPostById.execute(id);
+  async getById(@Param('id') id: number): Promise<HTTPPreResponse> {
+    return await this.handlerGetFarmerPostById.execute(id);
   }
 
   @Get()
-  async getAll(@Query() filters: FilterPaginationDTO): Promise<HTTPResponse> {
-    return this.handlerGetAllFarmerPosts.execute(filters);
+  async getAll(
+    @Query() filters: FilterPaginationDTO,
+  ): Promise<HTTPPreResponse> {
+    return await this.handlerGetAllFarmerPosts.execute(filters);
   }
 
   @Post()
-  async create(@Body() request: CreateFarmerPostDTO): Promise<HTTPResponse> {
-    return this.handlerCreateFarmerPost.execute(request);
+  async create(@Body() request: CreateFarmerPostDTO): Promise<HTTPPreResponse> {
+    return await this.handlerCreateFarmerPost.execute(request);
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() request: UpdateFarmerPostDTO,
-  ): Promise<HTTPResponse> {
-    return this.handlerUpdateFarmerPost.execute(id, request);
+  ): Promise<HTTPPreResponse> {
+    return await this.handlerUpdateFarmerPost.execute(id, request);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<HTTPResponse> {
-    return this.handlerDeleteFarmerPost.execute(id);
+  async delete(@Param('id') id: number): Promise<HTTPPreResponse> {
+    return await this.handlerDeleteFarmerPost.execute(id);
   }
 }

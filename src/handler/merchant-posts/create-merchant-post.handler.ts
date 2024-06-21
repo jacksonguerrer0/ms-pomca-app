@@ -1,10 +1,10 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { MerchantPostEntity } from 'domain/src/model/merchant-post/merchant-post.entity';
 import { CreateMerchantPostUseCase } from 'domain/src/usecase/merchant-post/create-merchant-post.usecase';
 import { CreateMerchantPostDTO } from 'src/adapters/in/http/merchant-posts/dto/create-merchant-post.dto';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
 export class HandlerCreateMerchantPost {
@@ -13,22 +13,20 @@ export class HandlerCreateMerchantPost {
     private readonly createMerchantPostUseCase: CreateMerchantPostUseCase,
   ) {}
 
-  async execute(merchantPost: CreateMerchantPostDTO): Promise<HTTPResponse> {
+  async execute(merchantPost: CreateMerchantPostDTO): Promise<HTTPPreResponse> {
     try {
       const merchantPostEntity = plainToClass(MerchantPostEntity, merchantPost);
       const newMerchantPost =
         await this.createMerchantPostUseCase.apply(merchantPostEntity);
 
-      return new HTTPResponse(
-        HttpStatus.CREATED,
-        'CREATED',
+      return new HTTPPreResponse(
+        HttpStatusMapper.CREATED.code,
         'Post created successfully',
         newMerchantPost,
       );
     } catch {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        'BAD_REQUEST',
+      return new HTTPPreResponse(
+        HttpStatusMapper.INTERNAL_SERVER_ERROR.code,
         'Post could not be created',
       );
     }

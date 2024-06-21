@@ -1,24 +1,26 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidUnknownValues: true,
-    skipNullProperties: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidUnknownValues: true,
+      skipNullProperties: true,
+    }),
+  );
 
-  // TODO: dEFINIT LOGGER, INTERCEPTORS, EXCEPTIONS MANAGERFILTER
-  // sinc status response with stauts api
+  // TODO: dEFINIT LOGGER
+
   const swaConfig = new DocumentBuilder()
     .setTitle('API')
-    .setDescription('pomca-app API')
+    .setDescription('Pomca-App API')
     .setVersion('1.0')
-    .build()
+    .build();
   const swaDocument = SwaggerModule.createDocument(app, swaConfig);
   SwaggerModule.setup('docs', app, swaDocument);
 

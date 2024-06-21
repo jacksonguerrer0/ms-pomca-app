@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { GetAllFarmerPostsUseCase } from 'domain/src/usecase/farmer-post/get-all-farmer-posts.usecase';
 import { mapFilterPaginateOptions } from 'src/adapters/out/postgres/common/utils/map_filter_paginate.util';
 import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pagination.dto';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
 export class HandlerGetAllFarmerPosts {
@@ -12,7 +12,7 @@ export class HandlerGetAllFarmerPosts {
     private readonly getAllFarmerPostsUseCase: GetAllFarmerPostsUseCase,
   ) {}
 
-  async execute(query: FilterPaginationDTO): Promise<HTTPResponse> {
+  async execute(query: FilterPaginationDTO): Promise<HTTPPreResponse> {
     try {
       const { filterOptions, paginationOptions } =
         mapFilterPaginateOptions(query);
@@ -21,17 +21,18 @@ export class HandlerGetAllFarmerPosts {
         paginationOptions,
       );
 
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.success.status,
-        'OK',
+      return new HTTPPreResponse(
+        HttpStatusMapper.OK.code,
         'Posts retrieved successfully',
-        { posts: data, pagination },
+        {
+          posts: data,
+          pagination,
+        },
       );
-    } catch {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        'BAD_REQUEST',
-        'Posts could not be retrieved',
+    } catch (error) {
+      return new HTTPPreResponse(
+        HttpStatusMapper.INTERNAL_SERVER_ERROR.code,
+        error.message || 'Posts could not be retrieved',
       );
     }
   }
