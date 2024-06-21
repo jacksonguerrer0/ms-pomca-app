@@ -26,12 +26,19 @@ export class MerchantPostRepository implements IMerchantPostRepository {
   }
 
   async delete(id: number): Promise<boolean> {
-    const result = await this.merchantPostRepository.delete(id);
+    const post = await this.getById(id);
+    const result = await this.merchantPostRepository.delete(post.id);
     return result.affected > 0;
   }
 
   async getById(id: number): Promise<MerchantPostEntity> {
-    return await this.merchantPostRepository.findOneBy({ id });
+    const post = await this.merchantPostRepository.findOneBy({ id });
+
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    return post;
   }
 
   async getAll(

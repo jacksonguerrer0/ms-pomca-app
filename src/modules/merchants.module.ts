@@ -33,4 +33,4 @@ import { HandlerGetMerchantById } from 'src/handler/merchants/get-farmer-by-id.h
   ],
   controllers: [MerchantsController],
 })
-export class MerchantModule {}
+export class MerchantsModule {}

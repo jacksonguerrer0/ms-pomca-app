@@ -4,7 +4,6 @@ import { DeleteFarmerPostUseCase } from 'domain/src/usecase/farmer-post/delete-f
 import { GetAllFarmerPostsUseCase } from 'domain/src/usecase/farmer-post/get-all-farmer-posts.usecase';
 import { GetFarmerPostUseCase } from 'domain/src/usecase/farmer-post/get-farmer-post.usecase';
 import { UpdateFarmerPostUseCase } from 'domain/src/usecase/farmer-post/update-farmer-post.usecase';
-import { GetFarmerByIdUseCase } from 'domain/src/usecase/farmer/get-farmer-by-id.usecase';
 import { FarmerPostsController } from 'src/adapters/in/http/farmer-posts/farmer-posts.controller';
 import { DriverRepositoryModule } from 'src/adapters/out/postgres/driver-repository-module';
 import { FarmerPostRepository } from 'src/adapters/out/postgres/repositories/famer-post.repository';
