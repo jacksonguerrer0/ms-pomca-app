@@ -4,7 +4,7 @@ import { GetHealthUsecase } from 'domain/src/usecase/health/get-health.usecase';
 @Injectable()
 export class HandlerGetServerHealth {
   constructor(
-    @Inject('GetHealthUsecase')
+    @Inject(GetHealthUsecase)
     private readonly getHealthUseCase: GetHealthUsecase,
   ) {}
 

@@ -11,6 +11,7 @@ export const FarmerPostEntitySchema = new EntitySchema<FarmerPostEntity>({
     },
     farmer_id: {
       type: Number,
+      nullable: false,
     },
     title: {
       type: String,

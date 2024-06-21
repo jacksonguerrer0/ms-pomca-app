@@ -17,7 +17,7 @@ export class HealthController {
   async getServerHealth(): Promise<HTTPResponse<string>> {
     try {
       const result = this.handlerGetServerHealth.execute();
-      if (result) throw new Error('Server is down');
+      if (!result) throw new Error('Server is down');
 
       return new HTTPResponse(
         CODE_MESSAGE_RESPONSE.success.status,
@@ -26,8 +26,8 @@ export class HealthController {
       );
     } catch (error) {
       return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.success.status,
-        CODE_MESSAGE_RESPONSE.success.code,
+        CODE_MESSAGE_RESPONSE.failure.status,
+        CODE_MESSAGE_RESPONSE.failure.code,
         error.message,
       );
     }

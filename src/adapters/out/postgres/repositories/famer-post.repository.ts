@@ -26,12 +26,19 @@ export class FarmerPostRepository implements IFarmerPostRepository {
   }
 
   async delete(id: number): Promise<boolean> {
-    const result = await this.farmerPostRepository.delete(id);
+    const post = await this.getById(id);
+    const result = await this.farmerPostRepository.delete(post.id);
     return result.affected > 0;
   }
 
   async getById(id: number): Promise<FarmerPostEntity> {
-    return await this.farmerPostRepository.findOneBy({ id });
+    const post = await this.farmerPostRepository.findOneBy({ id });
+
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    return post;
   }
 
   async getAll(

@@ -1,5 +1,4 @@
-import { ClassConstructor, plainToInstance } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
+import { ClassConstructor } from 'class-transformer';
 import {
   IFilterOptions,
   IPaginatedResult,
@@ -11,20 +10,18 @@ export async function filterOptions(
   options: IFilterOptions,
   entity: ClassConstructor<Object>,
 ) {
-  const {filters, order, orderBy, values} = options;
+  const { filters, order, orderBy, values } = options;
+  if (filters.length === 0) return {};
   for (const option of filters) {
-    try {
-      const result = plainToInstance(entity, option);
-      await validateOrReject(result);
-    } catch {
-      // TODO: Improve the error railway programming
-      throw new Error(
-        `${option} is not a valid filter`,
-      );
-    }
+    const validOption = entity.hasOwnProperty(option);
+    if (!validOption) throw new Error(`${option} is not a valid filter`);
   }
 
-  const whereFilter = filters.reduce((obj, filter, index) => ({...obj, [filter]: values[index] }), {})
+  const whereFilter = filters.reduce(
+    (obj, filter, index) => ({ ...obj, [filter]: values[index] }),
+    {},
+  );
+
   return {
     where: whereFilter,
     order: {
@@ -38,24 +35,27 @@ export async function filterAndPaginate<T>(
   options: IPaginationOptions,
   findOptions?: FindManyOptions<T>,
 ): Promise<IPaginatedResult<T>> {
-  const page = options.page || 1;
-  const pageSize = options.pageSize || 10;
+  const page = options.page;
+  const pageSize = options.pageSize;
+  try {
+    const [data, totalItems] = await repository.findAndCount({
+      ...findOptions,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
 
-  const [data, totalItems] = await repository.findAndCount({
-    ...findOptions,
-    skip: (page - 1) * pageSize,
-    take: pageSize,
-  });
+    const totalPages = Math.ceil(totalItems / pageSize);
 
-  const totalPages = Math.ceil(totalItems / pageSize);
-
-  return {
-    data,
-    pagination: {
-      page,
-      pageSize,
-      totalItems,
-      totalPages,
-    },
-  };
+    return {
+      data,
+      pagination: {
+        page,
+        pageSize,
+        totalItems,
+        totalPages,
+      },
+    };
+  } catch (error) {
+    console.error('Error filterAndPaginate:', error);
+  }
 }

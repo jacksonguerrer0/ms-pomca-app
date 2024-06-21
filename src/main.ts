@@ -13,7 +13,7 @@ async function bootstrap() {
   }));
 
   // TODO: dEFINIT LOGGER, INTERCEPTORS, EXCEPTIONS MANAGERFILTER
-
+  // sinc status response with stauts api
   const swaConfig = new DocumentBuilder()
     .setTitle('API')
     .setDescription('pomca-app API')
