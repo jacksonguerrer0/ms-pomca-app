@@ -11,7 +11,6 @@ export async function filterOptions(
   entity: ClassConstructor<Object>,
 ) {
   const { filters, order, orderBy, values } = options;
-  if (filters.length === 0) return {};
   for (const option of filters) {
     const validOption = entity.hasOwnProperty(option);
     if (!validOption) throw new Error(`${option} is not a valid filter`);
@@ -51,6 +50,7 @@ export async function filterAndPaginate<T>(
       pagination: {
         page,
         pageSize,
+        currentItems: data.length,
         totalItems,
         totalPages,
       },

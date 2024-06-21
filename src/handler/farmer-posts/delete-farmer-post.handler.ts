@@ -1,8 +1,7 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DeleteFarmerPostUseCase } from 'domain/src/usecase/farmer-post/delete-farmer-post.usecase';
-import { GetFarmerByIdUseCase } from 'domain/src/usecase/farmer/get-farmer-by-id.usecase';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 // TODO: Adjust controll errors
 @Injectable()
@@ -12,19 +11,18 @@ export class HandlerDeleteFarmerPost {
     private readonly deleteFarmerPostUseCase: DeleteFarmerPostUseCase,
   ) {}
 
-  async execute(id: number): Promise<HTTPResponse> {
+  async execute(id: number): Promise<HTTPPreResponse> {
     try {
       const isDeleted = await this.deleteFarmerPostUseCase.apply(id);
 
-      return new HTTPResponse(
-        HttpStatus.OK,
-        'OK',
+      return new HTTPPreResponse(
+        HttpStatusMapper.CREATED.code,
         'Post deleted successfully',
         isDeleted,
       );
     } catch (error) {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
+      return new HTTPPreResponse(
+        HttpStatusMapper.BAD_REQUEST.code,
         'BAD_REQUEST',
         error.message || 'Post could not be deleted',
       );

@@ -15,7 +15,7 @@ import { HandlerGetAllMerchantPosts } from 'src/handler/merchant-posts/get-all-m
 import { HandlerGetMerchantPostById } from 'src/handler/merchant-posts/get-merchant-post-by-id.handler';
 import { HandlerUpdateMerchantPost } from 'src/handler/merchant-posts/update-merchant-post.handler';
 import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pagination.dto';
-import { HTTPResponse } from 'src/model/http/response';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
 import { CreateMerchantPostDTO } from '../merchant-posts/dto/create-merchant-post.dto';
 import { UpdateMerchantPostDTO } from '../merchant-posts/dto/update-merchant-post.dto';
 
@@ -31,30 +31,34 @@ export class MerchantPostsController {
   ) {}
 
   @Get(':id')
-  async getById(@Param('id') id: number): Promise<HTTPResponse> {
-    return this.handlerGetMerchantPostById.execute(id);
+  async getById(@Param('id') id: number): Promise<HTTPPreResponse> {
+    return await this.handlerGetMerchantPostById.execute(id);
   }
 
   @Get()
-  async getAll(@Query() filters: FilterPaginationDTO): Promise<HTTPResponse> {
-    return this.handlerGetAllMerchantPosts.execute(filters);
+  async getAll(
+    @Query() filters: FilterPaginationDTO,
+  ): Promise<HTTPPreResponse> {
+    return await this.handlerGetAllMerchantPosts.execute(filters);
   }
 
   @Post()
-  async create(@Body() request: CreateMerchantPostDTO): Promise<HTTPResponse> {
-    return this.handlerCreateMerchantPost.execute(request);
+  async create(
+    @Body() request: CreateMerchantPostDTO,
+  ): Promise<HTTPPreResponse> {
+    return await this.handlerCreateMerchantPost.execute(request);
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() request: UpdateMerchantPostDTO,
-  ): Promise<HTTPResponse> {
-    return this.handlerUpdateMerchantPost.execute(id, request);
+  ): Promise<HTTPPreResponse> {
+    return await this.handlerUpdateMerchantPost.execute(id, request);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<HTTPResponse> {
-    return this.handlerDeleteMerchantPost.execute(id);
+  async delete(@Param('id') id: number): Promise<HTTPPreResponse> {
+    return await this.handlerDeleteMerchantPost.execute(id);
   }
 }

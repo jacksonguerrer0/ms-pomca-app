@@ -20,6 +20,7 @@ export interface IFilterPaginateOptions {
 export interface IPaginationData {
   page: number;
   pageSize: number;
+  currentItems: number;
   totalItems: number;
   totalPages: number;
 }

@@ -1,8 +1,8 @@
 import { Controller, Get, HttpCode } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HandlerGetAuthor } from 'src/handler/author/get-author-handler';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @ApiTags('Author')
 @Controller('v1/author')
@@ -12,19 +12,17 @@ export class AuthorController {
   @Get('/')
   @ApiOperation({ summary: 'Get author' })
   @HttpCode(200)
-  async getAuthor(): Promise<HTTPResponse> {
+  async getAuthor(): Promise<HTTPPreResponse> {
     try {
       const result = await this.handlerGetAuthor.execute();
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.success.status,
-        CODE_MESSAGE_RESPONSE.success.code,
-        CODE_MESSAGE_RESPONSE.success.message,
+      return new HTTPPreResponse(
+        HttpStatusMapper.OK.code,
+        HttpStatusMapper.OK.message,
         result,
       );
     } catch (error) {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        CODE_MESSAGE_RESPONSE.failure.code,
+      return new HTTPPreResponse(
+        HttpStatusMapper.INTERNAL_SERVER_ERROR.code,
         'Error getting author',
       );
     }

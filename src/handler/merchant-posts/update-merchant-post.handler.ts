@@ -1,11 +1,11 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { MerchantPostEntity } from 'domain/src/model/merchant-post/merchant-post.entity';
 import { GetMerchantPostUseCase } from 'domain/src/usecase/merchant-post/get-merchant-post.usecase';
 import { UpdateMerchantPostUseCase } from 'domain/src/usecase/merchant-post/update-merchant-post.usecase';
 import { UpdateMerchantPostDTO } from 'src/adapters/in/http/merchant-posts/dto/update-merchant-post.dto';
-import { HTTPResponse } from 'src/model/http/response';
-import { CODE_MESSAGE_RESPONSE } from 'src/model/http/statuses';
+import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
 export class HandlerUpdateMerchantPost {
@@ -19,7 +19,7 @@ export class HandlerUpdateMerchantPost {
   async execute(
     id: number,
     merchantPost: UpdateMerchantPostDTO,
-  ): Promise<HTTPResponse> {
+  ): Promise<HTTPPreResponse> {
     try {
       const currentPost = await this.getMerchantPostByIdUseCase.apply(id);
       const merchantPostEntity = plainToClass(MerchantPostEntity, {
@@ -28,17 +28,15 @@ export class HandlerUpdateMerchantPost {
       });
       const updatedPost =
         await this.updateMerchantPostUseCase.apply(merchantPostEntity);
-      return new HTTPResponse(
-        HttpStatus.PARTIAL_CONTENT,
-        'UPDATED',
+      return new HTTPPreResponse(
+        HttpStatusMapper.OK.code,
         'Post updated successfully',
         updatedPost,
       );
     } catch (error) {
-      return new HTTPResponse(
-        CODE_MESSAGE_RESPONSE.failure.status,
-        'BAD_REQUEST',
-        error.message || 'Post could not be updated',
+      return new HTTPPreResponse(
+        HttpStatusMapper.BAD_REQUEST.code,
+        error.message,
       );
     }
   }
