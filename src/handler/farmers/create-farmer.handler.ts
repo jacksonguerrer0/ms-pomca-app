@@ -17,7 +17,7 @@ export class HandlerCreateFarmer {
     try {
       const newFarmer = plainToClass(FarmerEntity, farmer);
       const result = await this.createFarmerUseCase.apply(newFarmer);
-  
+
       return new HTTPResponse(
         HttpStatus.CREATED,
         'CREATED',

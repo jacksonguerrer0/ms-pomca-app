@@ -8,7 +8,7 @@ import { HTTPResponse } from 'src/model/http/response';
 import { CreateMerchantDTO } from './dto/create-merchant.dto';
 
 @ApiTags('Merchants')
-@Controller('merchants')
+@Controller('v1/merchants')
 export class MerchantsController {
   constructor(
     private readonly handlerCreateMerchant: HandlerCreateMerchant,

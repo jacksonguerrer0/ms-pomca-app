@@ -1,3 +1,4 @@
+// TODO: Improve response https and use a standart response
 export class HTTPResponse<T = any> {
   constructor(
     public readonly status: number,
