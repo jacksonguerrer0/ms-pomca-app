@@ -1,7 +1,6 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { validateEnvVariables } from "./config/env.validation";
-
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { validateEnvVariables } from './config/env.validation';
 
 @Module({
   imports: [
@@ -10,6 +9,6 @@ import { validateEnvVariables } from "./config/env.validation";
       isGlobal: true,
       cache: true,
     }),
-  ]
+  ],
 })
 export class CommonsModule {}
