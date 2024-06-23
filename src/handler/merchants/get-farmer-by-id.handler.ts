@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { GetMerchantByIdUseCase } from 'domain/src/usecase/merchant/get-farmer-by-id.usecase';
-import { HTTPPreResponse } from 'src/model/http/pre-response';
+import { HTTPResponse } from 'src/model/http/response';
 import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
@@ -10,20 +10,13 @@ export class HandlerGetMerchantById {
     private readonly getMerchantByIdUseCase: GetMerchantByIdUseCase,
   ) {}
 
-  async execute(id: number): Promise<HTTPPreResponse> {
-    try {
-      const farmer = await this.getMerchantByIdUseCase.apply(id);
+  async execute(id: number): Promise<HTTPResponse> {
+    const farmer = await this.getMerchantByIdUseCase.apply(id);
 
-      return new HTTPPreResponse(
-        HttpStatusMapper.OK.code,
-        'Merchant retrieved successfully',
-        farmer,
-      );
-    } catch {
-      return new HTTPPreResponse(
-        HttpStatusMapper.BAD_REQUEST.code,
-        'Merchant could not be retrieved',
-      );
-    }
+    return new HTTPResponse(
+      HttpStatusMapper.OK.status,
+      'Merchant retrieved successfully',
+      farmer,
+    );
   }
 }
