@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { AppExceptionsFilter } from './commons/exceptions/app-exception-filter.exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -15,6 +16,7 @@ async function bootstrap() {
   );
 
   // TODO: dEFINIT LOGGER
+  app.useGlobalFilters(new AppExceptionsFilter());
 
   const swaConfig = new DocumentBuilder()
     .setTitle('API')
