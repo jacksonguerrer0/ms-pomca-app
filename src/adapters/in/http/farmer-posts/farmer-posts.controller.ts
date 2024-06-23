@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { HandlerCreateFarmerPost } from 'src/handler/farmer-posts/create-farmer-post.handler';
@@ -18,7 +19,9 @@ import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pag
 import { HTTPPreResponse } from 'src/model/http/pre-response';
 import { CreateFarmerPostDTO } from './dto/create-farmer-post.dto';
 import { UpdateFarmerPostDTO } from './dto/update-farmer-post.dto';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @ApiTags('Farmer Posts')
 @Controller('v1/farmer-posts')
 export class FarmerPostsController {

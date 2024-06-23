@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
 import { HandlerCreateFarmer } from 'src/handler/farmers/create-farmer.handler';
 import { HandlerGetAllFarmers } from 'src/handler/farmers/get-all-farmers.handler';
 import { HandlerGetFarmerById } from 'src/handler/farmers/get-farmer-by-id.handler';
@@ -7,6 +16,7 @@ import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pag
 import { HTTPPreResponse } from 'src/model/http/pre-response';
 import { CreateFarmerDTO } from './dto/create-farmer.dto';
 
+@UseGuards(AuthGuard)
 @ApiTags('Farmers')
 @Controller('v1/farmers')
 export class FarmersController {
