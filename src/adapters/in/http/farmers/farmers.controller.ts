@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/commons/guards/auth.guard';
-import { HandlerCreateFarmer } from 'src/handler/farmers/create-farmer.handler';
+import { HandlerSignupFarmer } from 'src/handler/farmers/create-farmer.handler';
 import { HandlerGetAllFarmers } from 'src/handler/farmers/get-all-farmers.handler';
 import { HandlerGetFarmerById } from 'src/handler/farmers/get-farmer-by-id.handler';
 import { FilterPaginationDTO } from 'src/model/dtos/filter-pagination/filter-pagination.dto';
@@ -21,15 +21,15 @@ import { CreateFarmerDTO } from './dto/create-farmer.dto';
 @Controller('v1/farmers')
 export class FarmersController {
   constructor(
-    private handlerCreateFarmer: HandlerCreateFarmer,
+    private handlerSignUpFarmer: HandlerSignupFarmer,
     private handlerGetFarmerById: HandlerGetFarmerById,
     private handlerGetAllFarmers: HandlerGetAllFarmers,
   ) {}
 
-  @Post()
-  @ApiOperation({ summary: 'Create a farmer' })
-  async create(@Body() request: CreateFarmerDTO): Promise<HTTPResponse> {
-    return await this.handlerCreateFarmer.execute(request);
+  @Post('/signup')
+  @ApiOperation({ summary: 'Signup a farmer' })
+  async signup(@Body() request: CreateFarmerDTO): Promise<HTTPResponse> {
+    return await this.handlerSignUpFarmer.execute(request);
   }
 
   @Get(':id')

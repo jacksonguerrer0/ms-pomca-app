@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { FarmerEntity } from 'domain/src/model/farmer/farmer.entity';
-import { CreateFarmerUseCase } from 'domain/src/usecase/farmer/create-farmer.usecase';
+import { SignupFarmerUseCase } from 'domain/src/usecase/farmer/signup-farmer.usecase';
 import { CreateFarmerDTO } from 'src/adapters/in/http/farmers/dto/create-farmer.dto';
 import { HTTPResponse } from 'src/model/http/response';
 import { HttpStatusMapper } from 'src/model/mappers/http/http-status-mapper';
 
 @Injectable()
-export class HandlerCreateFarmer {
+export class HandlerSignupFarmer {
   constructor(
-    @Inject(CreateFarmerUseCase)
-    private readonly createFarmerUseCase: CreateFarmerUseCase,
+    @Inject(SignupFarmerUseCase)
+    private readonly createFarmerUseCase: SignupFarmerUseCase,
   ) {}
 
   async execute(farmer: CreateFarmerDTO): Promise<HTTPResponse> {
