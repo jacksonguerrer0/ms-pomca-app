@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Lambda } from 'aws-sdk';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { isLocalEnv } from 'src/commons/utils/applications.utils';
 
 @Injectable()
 export class LambdaInvoker {
@@ -10,6 +11,7 @@ export class LambdaInvoker {
   constructor() {
     this.lambda = new Lambda({
       region: process.env.AWS_REGION,
+      endpoint: isLocalEnv ? process.env.ENDPOINT_LOCALSTACK! : undefined, // Use LocalStack endpoint in local environment
     });
   }
 
@@ -26,6 +28,7 @@ export class LambdaInvoker {
             `Error invocando la función Lambda: ${response.StatusCode}`,
           );
         }
+
         return JSON.parse(response.Payload as string);
       }),
     );

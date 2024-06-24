@@ -32,6 +32,9 @@ class EnvVariables {
 
   @IsString()
   AWS_LAMBDA_AUTH_CHECK_NAME!: string;
+
+  @IsString()
+  ENDPOINT_LOCALSTACK!: string;
 }
 
 export function validateEnvVariables(config: Record<string, unknown>) {

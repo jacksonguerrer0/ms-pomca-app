@@ -36,14 +36,19 @@ export class AuthGuard implements CanActivate {
       return of(true);
     }
 
-    try {
-      return this.lambdaInvoker.invokeLambda<boolean>(
-        process.env.AWS_LAMBDA_AUTH_CHECK_NAME!,
-        token,
-      );
-    } catch (error) {
-      console.error('Error validando token', error);
-      return of(false);
-    }
+    this.lambdaInvoker
+      .invokeLambda<boolean>(process.env.AWS_LAMBDA_AUTH_CHECK_NAME!, token)
+      .subscribe({
+        next: (response: any) => {
+          if (response.body.isAuthenticated) {
+            return true;
+          }
+          return false;
+        },
+        error: (err) => {
+          console.error('Error invoking Lambda:', err);
+          return false;
+        },
+      });
   }
 }
