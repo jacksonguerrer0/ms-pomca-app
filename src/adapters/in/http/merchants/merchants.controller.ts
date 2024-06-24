@@ -36,7 +36,7 @@ export class MerchantsController {
     return await this.handlerGetMerchantById.execute(id);
   }
 
-  @Post('/signup')
+  @Post()
   async signup(@Body() request: CreateMerchantDTO): Promise<HTTPResponse> {
     return await this.handlerSignupMerchant.execute(request);
   }

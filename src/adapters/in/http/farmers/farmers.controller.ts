@@ -26,7 +26,7 @@ export class FarmersController {
     private handlerGetAllFarmers: HandlerGetAllFarmers,
   ) {}
 
-  @Post('/signup')
+  @Post()
   @ApiOperation({ summary: 'Signup a farmer' })
   async signup(@Body() request: CreateFarmerDTO): Promise<HTTPResponse> {
     return await this.handlerSignUpFarmer.execute(request);
