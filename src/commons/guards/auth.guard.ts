@@ -42,7 +42,6 @@ export class AuthGuard implements CanActivate {
         token,
       );
     } catch (error) {
-      console.log('errrross')
       console.error('Error validando token', error);
       return of(false);
     }

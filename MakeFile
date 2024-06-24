@@ -1,0 +1,30 @@
+include .env
+
+setup: install-awslocal docker-compose-run build-lambdas create-lambdas
+
+install-awslocal:
+	pip3 install awscli-local
+
+docker-compose-run:
+	docker-compose up -d
+
+build-lambdas:
+	cd localstack-demo/lambda && zip -r lambdas.zip .
+
+create-lambdas:
+	awslocal lambda create-function --function-name ${AWS_LAMBDA_AUTH_CHECK_NAME} \
+    --runtime python3.8 --handler lambda_auth_check.handler \
+    --zip-file fileb://localstack-demo/lambda/lambdas.zip \
+		--role arn:aws:iam::000000000000:role/DummyRole
+	awslocal lambda create-function --function-name ${AWS_LAMBDA_AUTH_NAME} \
+    --runtime python3.8 --handler lambda_auth.handler \
+    --zip-file fileb://localstack-demo/lambda/lambdas.zip \
+		--role arn:aws:iam::000000000000:role/DummyRole
+
+call-lambda-auth-check:
+	awslocal lambda invoke --function-name ${AWS_LAMBDA_AUTH_CHECK_NAME} \
+		--payload 'token' /tmp/lambda-auth-check-response.json
+
+call-lambda-auth:
+	awslocal lambda invoke --function-name ${AWS_LAMBDA_AUTH_NAME} \
+		--payload 'user' /tmp/lambda-auth-response.json
