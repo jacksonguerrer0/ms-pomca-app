@@ -1,7 +1,6 @@
-import { plainToClass } from "class-transformer";
-import { IsEnum, IsString, validateSync } from "class-validator";
-import { skip } from "node:test";
-import { AppEnv } from "src/model/enums/env.enum";
+import { plainToClass } from 'class-transformer';
+import { IsEnum, IsString, validateSync } from 'class-validator';
+import { AppEnv } from 'src/model/enums/env.enum';
 
 class EnvVariables {
   @IsEnum(AppEnv)
@@ -24,8 +23,19 @@ class EnvVariables {
 
   @IsString()
   DB_TYPE!: string;
-}
 
+  @IsString()
+  AWS_REGION!: string;
+
+  @IsString()
+  AWS_LAMBDA_AUTH_NAME!: string;
+
+  @IsString()
+  AWS_LAMBDA_AUTH_CHECK_NAME!: string;
+
+  @IsString()
+  ENDPOINT_LOCALSTACK!: string;
+}
 
 export function validateEnvVariables(config: Record<string, unknown>) {
   const validateConfig = plainToClass(EnvVariables, config, {

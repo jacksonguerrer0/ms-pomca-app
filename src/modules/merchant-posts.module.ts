@@ -5,6 +5,7 @@ import { GetAllMerchantPostsUseCase } from 'domain/src/usecase/merchant-post/get
 import { GetMerchantPostUseCase } from 'domain/src/usecase/merchant-post/get-merchant-post.usecase';
 import { UpdateMerchantPostUseCase } from 'domain/src/usecase/merchant-post/update-merchant-post.usecase';
 import { MerchantPostsController } from 'src/adapters/in/http/merchant-posts/merchant-posts.controller';
+import { LambdaModule } from 'src/adapters/out/lambda/lambda.module';
 import { DriverRepositoryModule } from 'src/adapters/out/postgres/driver-repository-module';
 import { MerchantPostRepository } from 'src/adapters/out/postgres/repositories/merchant-post.repository';
 import { HandlerCreateMerchantPost } from 'src/handler/merchant-posts/create-merchant-post.handler';
@@ -14,7 +15,7 @@ import { HandlerGetMerchantPostById } from 'src/handler/merchant-posts/get-merch
 import { HandlerUpdateMerchantPost } from 'src/handler/merchant-posts/update-merchant-post.handler';
 
 @Module({
-  imports: [DriverRepositoryModule],
+  imports: [DriverRepositoryModule, LambdaModule],
   providers: [
     HandlerCreateMerchantPost,
     HandlerDeleteMerchantPost,

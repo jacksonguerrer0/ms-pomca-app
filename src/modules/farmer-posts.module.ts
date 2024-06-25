@@ -5,6 +5,7 @@ import { GetAllFarmerPostsUseCase } from 'domain/src/usecase/farmer-post/get-all
 import { GetFarmerPostUseCase } from 'domain/src/usecase/farmer-post/get-farmer-post.usecase';
 import { UpdateFarmerPostUseCase } from 'domain/src/usecase/farmer-post/update-farmer-post.usecase';
 import { FarmerPostsController } from 'src/adapters/in/http/farmer-posts/farmer-posts.controller';
+import { LambdaModule } from 'src/adapters/out/lambda/lambda.module';
 import { DriverRepositoryModule } from 'src/adapters/out/postgres/driver-repository-module';
 import { FarmerPostRepository } from 'src/adapters/out/postgres/repositories/famer-post.repository';
 import { HandlerCreateFarmerPost } from 'src/handler/farmer-posts/create-farmer-post.handler';
@@ -14,7 +15,8 @@ import { HandlerGetFarmerPostById } from 'src/handler/farmer-posts/get-farmer-po
 import { HandlerUpdateFarmerPost } from 'src/handler/farmer-posts/update-farmer-post.handler';
 
 @Module({
-  imports: [DriverRepositoryModule],
+  imports: [DriverRepositoryModule, LambdaModule
+  ],
   providers: [
     HandlerCreateFarmerPost,
     HandlerDeleteFarmerPost,
